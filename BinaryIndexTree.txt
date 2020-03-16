@@ -1,0 +1,9 @@
+Remove the last set bit:
+------------------------
+Extract Last set Bit: x & (-x)
+Remove it: x - (x & (-x))
+
+Adding last set bit:
+--------------------
+Extract Last set Bit: x & (-x)
+Adding it: x + (x & (-x))
