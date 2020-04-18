@@ -18,12 +18,9 @@ int _mergeSort(int arr[],int temp[],int left,int right){
 		mid = (right + left)/2;
 
 		inv_count += _mergeSort(arr,temp,left,mid);
-		//printArray(arr);
-		
 		inv_count += _mergeSort(arr,temp,mid+1,right);
-		//printArray(arr);
 		inv_count += merge(arr,temp,left,mid+1,right);
-		printArray(arr);
+		//printArray(arr);
 	}
 	return inv_count;
 }
@@ -34,7 +31,6 @@ int merge(int arr[],int temp[],int left,int mid,int right){
 	i = left;
 	j= mid;
 	k = left;
-    	//cout<<"i : "<<i<<" j: "<<j<<" k: "<<k<<endl;
 
 	while((i<=mid-1) && (j<=right)){
 		if(arr[i] <= arr[j]){
@@ -42,11 +38,7 @@ int merge(int arr[],int temp[],int left,int mid,int right){
 		}else{
 			temp[k++] = arr[j++];
 			inv_count = inv_count + (mid-i);
-			//cout<<"inv_count :"<<inv_count<<endl;
 		}
-		//printArray(arr);
-		cout<<"left: "<<left<<" mid: "<<mid<<" right: "<<right<<" i : "<<i<<" arr[i]: "<<arr[i]<<" j: "<<j<<" arr[j]: "<<arr[j]<<" k: "<<k<<" inv_count: "<<inv_count<<endl;
-
 	}
 
 	while(i<=mid-1){
@@ -57,7 +49,6 @@ int merge(int arr[],int temp[],int left,int mid,int right){
 	}
 
 	for(int counter=left; counter<=right; counter++){
-//		temp[counter] = arr[counter];
 		arr[counter] = temp[counter];
 	}
 
@@ -74,10 +65,24 @@ void printArray(int arr[]){
 
 int main(){
 	//int arr[] = {1,20,6,4,5};
-	int arr[] = {12,15,1,5,6,14,11};
-	int n = sizeof(arr)/sizeof(arr[0]);
-	//cout<<"Array size :"<<n<<endl;
-	int ans = mergeSort(arr,n);
-	cout<<"Number of inversions are "<<ans;
+	//int arr[] = {12,15,1,5,6,14,11};
+	//int n = sizeof(arr)/sizeof(arr[0]);
+	int *arr;
+	int no_of_input,n;
+	long inversion;
+	cin>>no_of_input;
+	for(int i=0;i<no_of_input;i++){
+		cin>>n;
+		arr = new int[n];
+		for(int j=0;j<n;j++){
+			int temp;
+			cin>>temp;
+			arr[j] = temp;
+		}
+		inversion = mergeSort(arr,n);
+		cout<<inversion<<endl;
+		delete [] arr;
+		arr = NULL;
+	}
 	return 0;
 }

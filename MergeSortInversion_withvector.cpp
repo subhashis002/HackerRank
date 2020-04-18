@@ -2,39 +2,36 @@
 //https://www.geeksforgeeks.org/counting-inversions/
 
 #include<bits/stdc++.h>
+#define N 100000
 using namespace std;
 
-int _mergeSort(vector<int> arr,int temp[],int left,int right);
-int merge(vector<int> arr,int temp[],int left,int mid,int right);
+
+int mergeSortUtil(vector<int> &arr,int temp[],int left,int right);
+int merge(vector<int> &arr,int temp[],int left,int mid,int right);
 void printArray(vector<int> arr);
-int mergeSort(vector<int> arr,int array_size){
-	int temp[array_size];
-	return _mergeSort(arr,temp,0,array_size-1);
+int mergeSort(vector<int> &arr,int array_size){
+	int temp[N];
+	return mergeSortUtil(arr,temp,0,array_size-1);
 }
 
-int _mergeSort(vector<int> arr,int temp[],int left,int right){
+int mergeSortUtil(vector<int> &arr,int temp[],int left,int right){
 	int mid,inv_count = 0;
 	if(right > left){
 		mid = (right + left)/2;
 
-		inv_count += _mergeSort(arr,temp,left,mid);
-		//printArray(arr);
-		
-		inv_count += _mergeSort(arr,temp,mid+1,right);
-		//printArray(arr);
+		inv_count += mergeSortUtil(arr,temp,left,mid);
+		inv_count += mergeSortUtil(arr,temp,mid+1,right);
 		inv_count += merge(arr,temp,left,mid+1,right);
-		printArray(arr);
 	}
 	return inv_count;
 }
 
-int merge(vector<int> arr,int temp[],int left,int mid,int right){
+int merge(vector<int> &arr,int temp[],int left,int mid,int right){
 	int i,j,k;
-	int inv_count = 0;
+	long inv_count = 0;
 	i = left;
 	j= mid;
 	k = left;
-    	//cout<<"i : "<<i<<" j: "<<j<<" k: "<<k<<endl;
 
 	while((i<=mid-1) && (j<=right)){
 		if(arr[i] <= arr[j]){
@@ -42,10 +39,7 @@ int merge(vector<int> arr,int temp[],int left,int mid,int right){
 		}else{
 			temp[k++] = arr[j++];
 			inv_count = inv_count + (mid-i);
-			//cout<<"inv_count :"<<inv_count<<endl;
 		}
-		//printArray(arr);
-		cout<<"left: "<<left<<" mid: "<<mid<<" right: "<<right<<" i : "<<i<<" arr[i]: "<<arr[i]<<" j: "<<j<<" arr[j]: "<<arr[j]<<" k: "<<k<<" inv_count: "<<inv_count<<endl;
 
 	}
 
@@ -57,7 +51,6 @@ int merge(vector<int> arr,int temp[],int left,int mid,int right){
 	}
 
 	for(int counter=left; counter<=right; counter++){
-//		temp[counter] = arr[counter];
 		arr[counter] = temp[counter];
 	}
 
@@ -73,12 +66,26 @@ void printArray(vector<int> arr){
 }
 
 int main(){
-	//vector<int> arr = {1,20,6,4,5};
-	//vector<int> arr = {12,15,1,5,6,14,11};
-	vector<int> arr{12,15,1,5,6,14,11};
-	int n = arr.size();
-	//cout<<"Array size :"<<n<<endl;
-	int ans = mergeSort(arr,n);
-	cout<<"Number of inversions are "<<ans;
+	vector<int> arr;
+	ifstream fin("input07.txt");
+	if(!fin.is_open()){
+		cout<<"Not able to opne input.txt";
+		exit(1);
+	}
+	int no_of_input,n;
+	long inversion;
+	fin>>no_of_input;
+	for(int i=0;i<no_of_input;i++){
+		arr.clear();
+		fin>>n;
+		for(int j=0;j<n;j++){
+			int temp;
+			fin>>temp;
+			arr.push_back(temp);
+		}
+		inversion = mergeSort(arr,n);
+		cout<<inversion<<endl;
+	}
+	fin.close();
 	return 0;
 }
