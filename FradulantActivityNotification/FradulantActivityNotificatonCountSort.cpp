@@ -27,7 +27,7 @@ double findMedian(vector<int> &arr,int start,int d,int *count){
 	}
 	if(d%2 != 0){
 		int k = d/2;
-		int j = 0;
+		int j = -1;
 		for(int i=0;i<201;i++){
 			if(count[i] != -1){
 				j+= count[i];
@@ -40,7 +40,7 @@ double findMedian(vector<int> &arr,int start,int d,int *count){
 		}
 	}else{
 		int k = (d-1)/2;
-		int j = 0;
+		int j = -1;
 		double sum = 0.0;
 		bool flag = false;
 		for(int i=0;i<201;i++){
